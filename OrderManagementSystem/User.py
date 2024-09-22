@@ -15,7 +15,6 @@ class User(ABC):
     def name(self):
         return self._name
 
-    @property
     @abstractmethod
     def discount_strategy(self):
         """Return the discount strategy associated with the user."""
@@ -24,7 +23,7 @@ class User(ABC):
 class VipUser(User):
     def __init__(self, user_id, name):
         super().__init__(user_id, name)
-        self._user_type = "vip"
+        self.user_type = "vip"
 
     def discount_strategy(self):
         """Return VIP discount strategy."""
@@ -34,7 +33,7 @@ class VipUser(User):
 class RegularUser(User):
     def __init__(self, user_id, name):
         super().__init__(user_id, name)
-        self._user_type = "regular"
+        self.user_type = "regular"
 
     def discount_strategy(self):
         """Return regular user discount strategy."""

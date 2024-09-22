@@ -1,5 +1,3 @@
-# order_processing_manager.py
-
 from OrderManager import OrderManager
 from UserManager import UserManager
 from Observer import UserNotification, AdminNotification
@@ -7,6 +5,7 @@ from OrderNotifier import OrderNotifier
 import threading
 
 class OrderManagementSystem:
+    """Singleton class to manage order processing."""
     _instance=None
     _lock=threading.Lock()
 
@@ -23,19 +22,21 @@ class OrderManagementSystem:
         self.notifier = OrderNotifier()
         self.user_manager = UserManager()
         self.order_manager = OrderManager(self.notifier)
-        self.setup_observers()
 
-    def setup_observers(self):
+
+    def setup_observers(self,userID):
         """Attach observers to the notifier."""
-        self.notifier.attach(101, UserNotification())  # Example user ID
+        self.notifier.attach(userID, UserNotification())  # Example user ID
 
     def create_user(self, user_type, name):
+
         """Create a user using the UserManager."""
         return self.user_manager.create_user(user_type, name)
 
     def process_order(self, user, items):
         """Process an order using the OrderManager."""
         self.order_manager.create_order(user, items)
+        self.setup_observers(user.user_id)
 
 
 
