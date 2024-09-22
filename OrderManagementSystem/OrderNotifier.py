@@ -9,12 +9,13 @@ class OrderNotifier:
             cls._instance.observers = {}  # Initialize the observers dictionary
         return cls._instance
 
+    def __init__(self):
+        self.observers = {}
 
     def attach(self, user_id, observer):
         if user_id not in self.observers:
             self.observers[user_id] = []
-        if(observer not in self.observers):
-            self.observers[user_id].append(observer)
+        self.observers[user_id].append(observer)
 
     def detach(self, user_id, observer):
         if user_id in self.observers:

@@ -29,4 +29,5 @@ class Order:
 
     def notify(self, message):
         """Notify the user via the notifier."""
+        print(message, end="\n\n")
         self.notifier.notify(self.user.user_id, message)
