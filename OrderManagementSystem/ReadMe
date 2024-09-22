@@ -1,0 +1,63 @@
+Order Management System
+
+Requirements:
+
+        User Management:
+        
+        Ability to create different types of users (Regular and VIP).
+        Assign appropriate discount strategies based on user type.
+        Order Management:
+        
+        Create and process orders with an auto-incremented order ID.
+        Maintain a record of active orders and allow removal after processing.
+        Discount Application:
+        
+        Apply discounts based on user type during the order process.
+        Notifications:
+        
+        Notify users and admins at various stages of the order lifecycle (creation, confirmation, processing, dispatch, and delivery).
+        State Management:
+        
+        Implement state transitions for orders to reflect their current status.
+        Thread Safety:
+        
+        Ensure that the Order Management System can handle concurrent requests safely.
+
+Design Patterns:
+
+        1. Singleton Pattern
+                The OrderNotifier class follows the Singleton design pattern, ensuring only one instance of the notifier exists across the system.
+                This is particularly useful for managing notifications for all orders centrally.
+        2. Factory Pattern
+                The Factory pattern is used in the UserFactory class to create different types of users (Regular and VIP) based on input.
+                This ensures that user creation is clean and adheres to the Open/Closed Principle by making it easy to add new user types without changing existing code.
+        3. Builder Pattern
+                The OrderBuilder class implements the Builder pattern to construct complex Order objects in a step-by-step process (adding items, applying discounts, etc.).
+                This pattern separates the construction of an object from its representation, making the code flexible and scalable.
+        4. State Pattern
+                The State pattern is employed in the OrderState and its subclasses (CreatedState, ProcessState, ConfirmedState, DispatchedState, and DeliveredState).
+                This allows the Order object to transition between different states, each encapsulating the behavior related to that particular state.
+                It also ensures adherence to the Single Responsibility Principle by keeping the order state logic separate from other order-related behaviors.
+        5. Observer Pattern
+                The Observer pattern is implemented in the OrderNotifier class, which allows multiple observers (e.g., UserNotification and AdminNotification) to receive updates about the order status.
+                This design helps to decouple the notification logic from the order processing, adhering to the Dependency Inversion Principle.
+
+
+SOLID Principles
+        1.Single Responsibility Principle (SRP):
+                Each class in the system has a single responsibility, such as user management, order management, or discount strategy.
+
+        2.Open/Closed Principle (OCP):
+                The system can be extended with new user types or order states without modifying existing code, thanks to the use of factory and state patterns.
+
+        3.Liskov Substitution Principle (LSP):
+                Subtypes (e.g., VipUser and RegularUser) can be used interchangeably where User is expected without altering the desired behavior.
+
+        4.Interface Segregation Principle (ISP):
+                The system interfaces are small and client-specific, preventing users from being forced to implement interfaces they don't use.
+
+        5.Dependency Inversion Principle (DIP):
+                High-level modules (like OrderManager) do not depend on low-level modules (User, Order), but rather on abstractions (interfaces).
+
+
+
