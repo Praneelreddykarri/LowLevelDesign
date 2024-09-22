@@ -74,4 +74,4 @@ Design patterns are proven solutions to common software design problems. Here ar
 
 ## Conclusion
 
-By understanding and applying SOLID principles and design patterns, you can create software that is not only effective but also easy to maintain and scale. This repository serves as a foundation for your learning journey, providing examples and explanations to deepen your understanding. Happy coding!
+This repository serves as a foundation for Low Level Design learning journey, providing examples and explanations to deepen LLD Knowledge. Happy coding!
