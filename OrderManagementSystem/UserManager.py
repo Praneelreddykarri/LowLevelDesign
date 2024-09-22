@@ -1,8 +1,10 @@
 from UserFactory import UserFactory
+from threading import Lock
 
 class UserManager:
     """Manager for creating and handling users."""
     user_counter = 0
+    _lock = Lock()
 
     def __init__(self):
         self.users = []  # List to store active orders

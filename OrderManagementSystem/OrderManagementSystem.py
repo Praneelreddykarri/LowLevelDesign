@@ -35,8 +35,8 @@ class OrderManagementSystem:
 
     def process_order(self, user, items):
         """Process an order using the OrderManager."""
-        self.order_manager.create_order(user, items)
         self.setup_observers(user.user_id)
+        self.order_manager.create_order(user, items)
 
 
 
