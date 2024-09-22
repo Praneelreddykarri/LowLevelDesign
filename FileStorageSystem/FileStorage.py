@@ -1,9 +1,22 @@
 from Folder import Folder
 from File import File
+import threading
 
 class FileStorage:
+
+    _instance=None
+    _lock=threading.Lock()
+
+    def __new__(cls):
+        if(cls._instance is None):
+            cls._lock.acquire()
+            if (cls._instance is None):
+                cls._instance = super().__new__(cls)
+                cls._instance.storage = {}
+            cls._lock.release()
+        return cls._instance
+
     def __init__(self):
-        self.storage = {}
         self.root = Folder("root")
         self.storage["/"] = self.root
 
