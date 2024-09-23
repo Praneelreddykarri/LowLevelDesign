@@ -23,68 +23,59 @@ The Decorator Pattern is a structural design pattern that allows behavior to be 
 
 Consider a scenario where we have different types of ice creams and we want to add toppings (like chocolate syrup, sprinkles, and nuts) dynamically.
 
-### Pseudo Code
+### Example Code
 
 ```plaintext
+# Component
 
-// Component
+class IceCream:
+    def cost(self) -> float:
+        pass
 
-interface IceCream {
-    function cost(): Float
-    function description(): String
-}
+    def description(self) -> str:
+        pass
 
 
-// Concrete Component
+# Concrete Component
 
-class VanillaIceCream implements IceCream {
-    function cost(): Float {
+class VanillaIceCream(IceCream):
+    def cost(self) -> float:
         return 50.0
-    }
-    function description(): String {
+
+    def description(self) -> str:
         return "Vanilla Ice Cream"
-    }
-}
 
 
-// Decorator
+# Decorator
 
-abstract class ToppingDecorator implements IceCream {
-    protected IceCream iceCream
+class ToppingDecorator(IceCream):
+    def __init__(self, ice_cream: IceCream):
+        self._ice_cream = ice_cream
 
-    constructor(IceCream iceCream) {
-        this.iceCream = iceCream
-    }
+    def cost(self) -> float:
+        return self._ice_cream.cost()
 
-    function cost(): Float {
-        return this.iceCream.cost()
-    }
-    function description(): String {
-        return this.iceCream.description()
-    }
-}
+    def description(self) -> str:
+        return self._ice_cream.description()
 
 
-// Concrete Decorator
+# Concrete Decorator
 
-class ChocolateSyrup extends ToppingDecorator {
-    function cost(): Float {
-        return this.iceCream.cost() + 10.0
-    }
-    function description(): String {
-        return this.iceCream.description() + ", Chocolate Syrup"
-    }
-}
+class ChocolateSyrup(ToppingDecorator):
+    def cost(self) -> float:
+        return self._ice_cream.cost() + 10.0
+
+    def description(self) -> str:
+        return self._ice_cream.description() + ", Chocolate Syrup"
 
 
-// Client Code
+# Client Code
 
-function main() {
-    IceCream iceCream = new VanillaIceCream()
-    print(iceCream.description()) // "Vanilla Ice Cream"
-    print(iceCream.cost())         // 50.0
+def main():
+    ice_cream = VanillaIceCream()
+    print(ice_cream.description())  # "Vanilla Ice Cream"
+    print(ice_cream.cost())          # 50.0
 
-    iceCream = new ChocolateSyrup(iceCream)
-    print(iceCream.description()) // "Vanilla Ice Cream, Chocolate Syrup"
-    print(iceCream.cost())         // 60.0
-}
+    ice_cream = ChocolateSyrup(ice_cream)
+    print(ice_cream.description())  # "Vanilla Ice Cream, Chocolate Syrup"
+    print(ice_cream.cost())          # 60.0
