@@ -25,90 +25,97 @@ Consider a vending machine that has three primary states:
 
 ### Code Example
 
-Here's an Example of a vending machine using the State Pattern:
+Here’s how the State Pattern can be implemented in a vending machine in Python, pls check the complete code in repository:
 
-```plaintext
+```python
+# Abstract State Class
+from abc import ABC, abstractmethod
 
-// Abstract State Class
+class State(ABC):
+    @abstractmethod
+    def insert_money(self):
+        pass
 
-class State {
-    method insert_money()
-    method select_product()
-    method dispense()
-}
+    @abstractmethod
+    def select_product(self):
+        pass
+
+    @abstractmethod
+    def dispense(self):
+        pass
 
 
-// Concrete State Classes
+# Concrete State Classes
+class MoneyInsertionState(State):
+    def __init__(self, vending_machine):
+        self.vending_machine = vending_machine
 
-class MoneyInsertionState extends State {
-    method insert_money() {
+    def insert_money(self):
         print("Money inserted.")
-        set_state(ProductSelectState)
-    }
+        self.vending_machine.set_state(self.vending_machine.product_select_state)
 
-    method select_product() {
+    def select_product(self):
         print("Please insert money first!")
-    }
 
-    method dispense() {
+    def dispense(self):
         print("No product dispensed. Please insert money.")
-    }
-}
 
-class ProductSelectState extends State {
-    method insert_money() {
+
+class ProductSelectState(State):
+    def __init__(self, vending_machine):
+        self.vending_machine = vending_machine
+
+    def insert_money(self):
         print("Money already inserted. Please select a product.")
-    }
 
-    method select_product() {
+    def select_product(self):
         print("Product selected.")
-        set_state(ProductDispenseState)
-    }
+        self.vending_machine.set_state(self.vending_machine.product_dispense_state)
 
-    method dispense() {
+    def dispense(self):
         print("No product selected. Please select a product.")
-    }
-}
 
-class ProductDispenseState extends State {
-    method insert_money() {
+
+class ProductDispenseState(State):
+    def __init__(self, vending_machine):
+        self.vending_machine = vending_machine
+
+    def insert_money(self):
         print("Product is being dispensed! Unable to insert money.")
-    }
 
-    method select_product() {
+    def select_product(self):
         print("Product is being dispensed! Unable to select a product.")
-    }
 
-    method dispense() {
-        print("Dispensing the product...")
-    }
-}
+    def dispense(self):
+        product_name = self.vending_machine.product.get_name()
+        print(f"Dispensing the {product_name}...")
 
 
-// Vending Machine Class
+# Vending Machine Class
+class VendingMachine:
+    def __init__(self, product):
+        self.money_insertion_state = MoneyInsertionState(self)
+        self.product_select_state = ProductSelectState(self)
+        self.product_dispense_state = ProductDispenseState(self)
+        self.current_state = self.money_insertion_state
+        self.product = product  # Accept a product instance
 
-class VendingMachine {
-    constructor(product) {
-        this.state = MoneyInsertionState
-    }
+    def set_state(self, state):
+        self.current_state = state
 
-    method set_state(state) {
-        this.state = state
-    }
+    def insert_money(self):
+        self.current_state.insert_money()
 
-    method insert_money() {
-        this.state.insert_money()
-    }
-
-    method select_product() {
-        this.state.select_product()
-        this.state.dispense()
-    }
-}
+    def select_product(self):
+        self.current_state.select_product()
+        self.current_state.dispense()
 
 
-// Running the vending machine
-
-vending_machine = new VendingMachine()
-vending_machine.insert_money()  // User inserts money
-vending_machine.select_product() // User selects a product
+# Running the vending machine
+if __name__ == "__main__":
+    product = Chocolate()  # Example product
+    vending_machine = VendingMachine(product)
+    
+    # Testing the states
+    vending_machine.insert_money()  # Insert money
+    vending_machine.select_product()  # Select product
