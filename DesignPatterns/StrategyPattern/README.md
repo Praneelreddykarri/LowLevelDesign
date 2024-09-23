@@ -3,7 +3,7 @@
 ## Overview
 The **Strategy Pattern** is a behavioral design pattern that allows you to define a family of algorithms, encapsulate each one as a separate class, and make them interchangeable. This pattern lets the algorithm vary independently from the clients that use it.
 
-In simpler terms, it enables selecting different algorithms (or behaviors) at runtime without altering the client code. It helps in making your code flexible and open to future changes without requiring modifications to existing code.
+In simpler terms, it enables selecting different algorithms (or behaviors) at runtime without altering the client code. It helps in making our code flexible and open to future changes without requiring modifications to existing code.
 
 ### Key Benefits of the Strategy Pattern:
 - **Separation of Concerns**: Each strategy is encapsulated in its own class, making the code easier to understand and maintain.
@@ -12,9 +12,9 @@ In simpler terms, it enables selecting different algorithms (or behaviors) at ru
 
 ## How It Works
 In the Strategy Pattern, there are three main components:
-1. **Context**: The class that uses a strategy to perform its function. In your code, this is the `PaymentProcessor` class.
-2. **Strategy**: The interface or abstract class that declares the method(s) to be implemented by all concrete strategies. In your code, this is the `PaymentStrategy` abstract class.
-3. **Concrete Strategies**: These are the specific implementations of the `Strategy`. In your code, examples are `CreditCardPayment`, `PayPalPayment`, and `BitcoinPayment`.
+1. **Context**: The class that uses a strategy to perform its function. In our code, this is the `PaymentProcessor` class.
+2. **Strategy**: The interface or abstract class that declares the method(s) to be implemented by all concrete strategies. In our code, this is the `PaymentStrategy` abstract class.
+3. **Concrete Strategies**: These are the specific implementations of the `Strategy`. In our code, examples are `CreditCardPayment`, `PayPalPayment`, and `BitcoinPayment`.
 
 ## Example from the Code
 
